@@ -47,6 +47,7 @@ router.post("/signup", async (req, res, next) => {
 router.post("/deposit", async (req, res, next) => {
   const { amount } = req.body;
   customerId = await User.findOne({ name: "ahmad" }).customerId;
+  console.log(customerId);
 
   try {
     const session = await stripe.checkout.sessions.create({
