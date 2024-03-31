@@ -17,6 +17,6 @@ mongoose
     "mongodb+srv://ajajeh356:testingtesting@project.hnzeyqm.mongodb.net/?retryWrites=true&w=majority&appName=project"
   )
   .then((connection) => {
-    console.log(connection);
+    // console.log(connection);
     console.log("DATABASE CONNECTED");
   });

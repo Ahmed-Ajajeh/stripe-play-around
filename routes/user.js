@@ -46,7 +46,7 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/deposit", async (req, res, next) => {
   const { amount } = req.body;
-  customerId = "cus_Pq2zwt0VuiEd5P";
+  customerId = await User.findOne({ name: "ahmad" }).customerId;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -112,6 +112,25 @@ router.post("/webhook", async (req, res) => {
   } catch (error) {
     console.error("Error handling webhook:", error);
     res.status(500).send("Webhook Error");
+  }
+});
+
+router.post("/withdraw", async (req, res, next) => {
+  const amount = req.body.amount;
+  const customerId = await Uesr.findOne({ name: "ahmad" }).customerId;
+
+  try {
+    const transfer = await stripe.transfers.create({
+      amount: amount * 100, // Amount in cents
+      currency: "usd",
+      destination: customerId, // The Stripe Customer ID (connected account)
+      transfer_group: "dynamic_withdrawal", // Optional transfer group to tie transfers together
+    });
+
+    return res.send(transfer);
+  } catch (error) {
+    console.error("Error creating transfer:", error);
+    return res.send(error);
   }
 });
 
