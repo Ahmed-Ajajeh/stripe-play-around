@@ -127,6 +127,8 @@ router.post("/withdraw", async (req, res, next) => {
       },
     });
 
+    console.log("bank account", bankAccountToken);
+
     const payout = await stripe.payouts.create({
       amount: amount * 100, // Amount in cents
       currency: currency,
@@ -137,7 +139,12 @@ router.post("/withdraw", async (req, res, next) => {
       // metadata: { custom_key: 'custom_value' },
     });
 
+    console.log("============================");
+    console.log("payout", payout);
+    console.log("============================");
+
     const payoutDetails = await stripe.payouts.retrieve(payout.id);
+    console.log(payoutDetails);
     return res.send(payoutDetails);
   } catch (error) {
     console.error("Error creating transfer:", error);
