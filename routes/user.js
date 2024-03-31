@@ -137,7 +137,8 @@ router.post("/withdraw", async (req, res, next) => {
       // metadata: { custom_key: 'custom_value' },
     });
 
-    return res.send(payout);
+    const payoutDetails = await stripe.payouts.retrieve(payout.id);
+    return res.send(payoutDetails);
   } catch (error) {
     console.error("Error creating transfer:", error);
     return res.send(error);
