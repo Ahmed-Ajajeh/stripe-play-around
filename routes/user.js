@@ -71,6 +71,7 @@ router.post("/deposit", async (req, res, next) => {
 
     return res.send(session.url);
   } catch (error) {
+    console.log(process.env.RENDER_EXTERNAL_HOSTNAME);
     console.error("Error creating Checkout session:", error);
     return res.status(500).json({ error: "Failed to create Checkout session" });
   }
