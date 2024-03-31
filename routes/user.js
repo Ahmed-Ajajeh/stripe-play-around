@@ -46,7 +46,7 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/deposit", async (req, res, next) => {
   const { amount } = req.body;
-  customerId = "cus_Pq0pZ9FWVwo2oX";
+  customerId = "cus_Pq2zwt0VuiEd5P";
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -89,6 +89,9 @@ router.post("/webhook", async (req, res) => {
       const customerId = session.customer;
       const amountPaid = session.amount_total;
 
+      console.log("customerId", customerId);
+      console.log("amountPaid", amountPaid);
+
       // Update your database to reflect the successful payment
       // For example, update the user's wallet balance
       // You might have a User model and update the balance for the customerId
@@ -98,6 +101,8 @@ router.post("/webhook", async (req, res) => {
         { $inc: { balance: amountPaid } }, // Increment the balance by the amount paid
         { new: true }
       );
+
+      console.log(user);
 
       console.log("Wallet balance updated:", user);
 
