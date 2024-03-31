@@ -14,8 +14,9 @@ app.listen(3000);
 // connecting to db :
 mongoose
   .connect(
-    "mongodb+srv://ajajeh356:icedMango@cluster0.8nfdnwa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://ajajeh356:testingtesting@project.hnzeyqm.mongodb.net/?retryWrites=true&w=majority&appName=project"
   )
   .then((connection) => {
+    console.log(connection);
     console.log("DATABASE CONNECTED");
   });
