@@ -46,8 +46,6 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/deposit", async (req, res, next) => {
   const { amount } = req.body;
-  customerId = await User.findOne({ name: "ahmad" }).customerId;
-  console.log(customerId);
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -67,7 +65,7 @@ router.post("/deposit", async (req, res, next) => {
       mode: "payment",
       success_url: "https://" + process.env.RENDER_EXTERNAL_HOSTNAME, // Update with your success URL
       cancel_url: "https://" + process.env.RENDER_EXTERNAL_HOSTNAME, // Update with your cancel URL
-      customer: customerId, // Associate with the Stripe customer
+      customer: "cus_Pq5P8zKA6ScRkK", // Associate with the Stripe customer
     });
 
     return res.send(session.url);
@@ -118,13 +116,12 @@ router.post("/webhook", async (req, res) => {
 
 router.post("/withdraw", async (req, res, next) => {
   const amount = req.body.amount;
-  const customerId = await Uesr.findOne({ name: "ahmad" }).customerId;
 
   try {
     const transfer = await stripe.transfers.create({
       amount: amount * 100, // Amount in cents
       currency: "usd",
-      destination: customerId, // The Stripe Customer ID (connected account)
+      destination: "cus_Pq5P8zKA6ScRkK", // The Stripe Customer ID (connected account)
       transfer_group: "dynamic_withdrawal", // Optional transfer group to tie transfers together
     });
 
