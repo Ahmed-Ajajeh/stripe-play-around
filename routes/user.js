@@ -64,8 +64,8 @@ router.post("/deposit", async (req, res, next) => {
         },
       ],
       mode: "payment",
-      success_url: process.env.host, // Update with your success URL
-      cancel_url: process.env.host, // Update with your cancel URL
+      success_url: process.env.RENDER_EXTERNAL_HOSTNAME, // Update with your success URL
+      cancel_url: process.env.RENDER_EXTERNAL_HOSTNAME, // Update with your cancel URL
       customer: customerId, // Associate with the Stripe customer
     });
 

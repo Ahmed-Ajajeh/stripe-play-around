@@ -13,7 +13,9 @@ app.listen(3000);
 
 // connecting to db :
 mongoose
-  .connect("mongodb://localhost:27017/stripe_play_around")
+  .connect(
+    "mongodb+srv://ajajeh356:icedMango@cluster0.8nfdnwa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  )
   .then((connection) => {
     console.log("DATABASE CONNECTED");
   });
