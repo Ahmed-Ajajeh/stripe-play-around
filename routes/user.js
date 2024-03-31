@@ -131,7 +131,7 @@ router.post("/withdraw", async (req, res, next) => {
 
     const payout = await stripe.payouts.create({
       amount: amount * 100, // Amount in cents
-      currency: currency,
+      currency: "usd",
       method: "standard",
       destination: bankAccountToken.id, // Test bank account token
       // Add more optional parameters if needed
