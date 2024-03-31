@@ -98,7 +98,7 @@ router.post("/webhook", async (req, res) => {
       // This is just a general example, modify it based on your database structure
       const user = await User.findOneAndUpdate(
         { stripeCustomerId: customerId },
-        { $inc: { balance: amountPaid } }, // Increment the balance by the amount paid
+        { $inc: { balance: amountPaid / 100 } }, // Increment the balance by the amount paid
         { new: true }
       );
 
