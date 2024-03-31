@@ -118,14 +118,26 @@ router.post("/withdraw", async (req, res, next) => {
   const amount = req.body.amount;
 
   try {
-    const transfer = await stripe.transfers.create({
-      amount: amount * 100, // Amount in cents
-      currency: "usd",
-      destination: "cus_Pq5P8zKA6ScRkK", // The Stripe Customer ID (connected account)
-      transfer_group: "dynamic_withdrawal", // Optional transfer group to tie transfers together
+    const bankAccountToken = await stripe.tokens.create({
+      bank_account: {
+        country: "US",
+        currency: "usd",
+        account_number: "000123456789", // Use test account number
+        routing_number: "110000000", // Use test routing number
+      },
     });
 
-    return res.send(transfer);
+    const payout = await stripe.payouts.create({
+      amount: amount * 100, // Amount in cents
+      currency: currency,
+      method: "standard",
+      destination: bankAccountToken.id, // Test bank account token
+      // Add more optional parameters if needed
+      // statement_descriptor: 'Custom descriptor',
+      // metadata: { custom_key: 'custom_value' },
+    });
+
+    return res.send(payout);
   } catch (error) {
     console.error("Error creating transfer:", error);
     return res.send(error);
